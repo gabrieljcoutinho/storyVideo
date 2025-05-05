@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vídeos Empilhados</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: black;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #videoContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.5s ease;
+    }
+    video {
+        max-width: 90vw;
+        max-height: 70vh;
+        margin-bottom: 20px;
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div id="videoContainer">
+</div>
+
+<script>
+    const videoContainer = document.getElementById('videoContainer');
+    let videos = [];
+    let currentVideoIndex = 0;
+
+    function loadVideos() {
+        videos = document.querySelectorAll('video');
+        // Adicione um evento de escuta ao fim de cada vídeo para passar para o próximo
+        videos.forEach((video, index) => {
+            video.addEventListener('ended', () => {
+                scrollToNextVideo();
+            });
+        });
+    }
+
+    function playRandomVideo() {
+        const randomIndex = Math.floor(Math.random() * videos.length);
+        currentVideoIndex = randomIndex;
+        videos.forEach((video, index) => {
+            if (index === randomIndex) {
+                video.style.display = 'block';
+                video.play();
+            } else {
+                video.style.display = 'none';
+                video.pause();
+            }
+        });
+    }
+
+    function scrollToNextVideo() {
+        currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+        playRandomVideo();
+    }
+
+    function scrollToPreviousVideo() {
+        currentVideoIndex = (currentVideoIndex - 1 + videos.length) % videos.length;
+        playRandomVideo();
+    }
+
+    document.addEventListener('wheel', function(event) {
+        if (event.deltaY > 0) {
+            scrollToNextVideo();
+        } else {
+            scrollToPreviousVideo();
+        }
+    });
+
+    // Iniciar a reprodução dos vídeos aleatoriamente quando a página for carregada
+    window.onload = function() {
+        loadVideos();
+        playRandomVideo();
+    };
+</script>
+
+<!-- Adicione os vídeos aqui -->
+<video controls autoplay muted>
+    <source src="./Lamborghini.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video controls autoplay>
+    <source src="./Lamborghini Huracan.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video controls autoplay>
+    <source src="./Lamborghini Aventador@.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video controls autoplay>
+    <source src="./McLarenDançaKonduro.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video controls autoplay>
+    <source src="./BugattiDançaKonduro.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video controls autoplay>
+    <source src="./demontracaoDaBugatti.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video controls autoplay>
+    <source src="./carrosDançaKonduro.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<video controls autoplay>
+    <source src="./mnLarenDançaKonduro2.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+</body>
+</html>
